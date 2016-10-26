@@ -1,4 +1,4 @@
-# AStar
+# AStar - draft [under development]
 "A*" algorithm implementation in java
 
 The	A*	(A-Star)	search	algorithm	is	a	path-finding	algorithm	with	many	uses,	including	Artificial	
