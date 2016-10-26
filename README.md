@@ -8,10 +8,10 @@ Intelligence	for	games.	The	search	builds	the	route	from	tile	to	tile	until	it	r
 It is an eclipse project, import it from eclipse, the program expects a the graph file as command line argument.set the arguments in run configuration ex: graphs\input\test1.txt
 
 ### Map representation
-Graph file uses the following representation.<br />
+Graph file uses the following representation.
 
-@ - Source node.<br />
-X - Destination node.<br />
-. - Flatlands (Edge with weight 1).<br />
-* - Forests (Edge with weight 2).<br />
-^ - Forests (Edge with weight 3).<br />
+ @  - Source node.  
+ X  - Destination node.  
+ .  - Flatlands (Edge with weight 1).  
+ \* - Forests (Edge with weight 2).  
+ ^  - Forests (Edge with weight 3).  
