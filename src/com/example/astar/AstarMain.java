@@ -5,7 +5,9 @@ package com.example.astar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -29,9 +31,9 @@ public class AstarMain {
 	
 	private static char destinationSymbol = 'X';
 	
-	private static int sourceIndex;
+	private static Node start;
 	
-	private static int destinationIndex;
+	private static Node goal;
 	
 	private static int numberOfVerices;
 	
@@ -60,8 +62,12 @@ public class AstarMain {
 			System.out.println("Graph file not found");
 		}
 		
+		Astar astar = new Astar(graph);
+		HashMap<Node, Node> shortestPath = astar.findShortestPath(start, goal);
+		System.out.println("Input Graph:\n");
 		printGraph();
-
+		System.out.println("Shortest Path\n");
+		printShortestPath(shortestPath);
 	}
 	
 	private static void createAdjacencyMatrix(File graphFile) throws FileNotFoundException {
@@ -75,34 +81,43 @@ public class AstarMain {
 				numberOfVerices = line.length();
 				graph = new int[numberOfVerices][numberOfVerices];
 			}
-			for(y = 0; y < line.length(); y++) {
-				if (line.charAt(y) == sourceSymbol) {
-					sourceIndex = y;
+			for(x = 0; x < line.length(); x++) {
+				if (line.charAt(x) == sourceSymbol) {
+					start = new Node(x, y);
 				}
 				
-				if (line.charAt(y) == destinationSymbol) {
-					destinationIndex = y;
+				if (line.charAt(x) == destinationSymbol) {
+					goal = new Node(x, y);
 				}
-				edgeWeight = symbolMap.get(line.charAt(y));
+				edgeWeight = symbolMap.get(line.charAt(x));
 //				System.out.println(edgeWeight);
 				if (edgeWeight != null) {
-					graph[x][y] = edgeWeight;
+					graph[y][x] = edgeWeight;
 				} else {
 					// any stray char is considered as obstacle 
-					graph[x][y] = Integer.MAX_VALUE;
+					graph[y][x] = Integer.MAX_VALUE;
 				}
 			}
-			x++;
+			y++;
 			
 		}
 	}
 	
 	private static void printGraph() {
-		for (int x = 0; x < graph.length; x++) {
-			for (int y = 0; y < graph.length; y++) {
-				System.out.print(graph[x][y] + " ");
+		for (int y = 0; y < graph.length; y++) {
+			for (int x = 0; x < graph.length; x++) {
+				System.out.print(graph[y][x] + " ");
 			}
 			System.out.print("\n");
+		}
+	}
+	
+	private static void printShortestPath(HashMap<Node, Node> shortestPath) {
+		Node next = goal;
+		System.out.print(next);
+		while(!next.equals(start)) {		
+			System.out.print(" => " + shortestPath.get(next));
+			next = shortestPath.get(next);
 		}
 	}
 
