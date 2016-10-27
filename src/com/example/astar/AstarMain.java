@@ -5,6 +5,8 @@ package com.example.astar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -37,11 +39,8 @@ public class AstarMain {
 	
 	private static int numberOfVerices;
 	
-	private static final String SOURCE_FOLDER = "graphs" + 
-			File.pathSeparatorChar + "input" + File.pathSeparatorChar;
-	
-	private static final String DESTINATION_FOLDER = "graphs" + 
-			File.pathSeparatorChar + "output" + File.pathSeparatorChar;
+	private static final String OUTPUT_FOLDER = "graphs" + 
+			File.separator + "output" + File.separator;
 	
 	
 	/**
@@ -79,14 +78,19 @@ public class AstarMain {
 		Astar astar = new Astar(graph);
 		HashMap<Node, Node> shortestPath = astar.findShortestPath(start, goal);
 		System.out.println("Input Graph:\n");
-		printGraph();
+//		printGraph();
 		
 		if (shortestPath.isEmpty()) {
 			System.out.println("No path found to goal" + goal);
 			System.exit(0);
 		}
 		System.out.println("Shortest Path\n");
-		printShortestPath(shortestPath);
+//		printShortestPath(shortestPath);
+		try {
+			createMapFile(shortestPath, graphFile);
+		} catch (IOException e) {
+			System.out.println("Error in creating output file");
+		}
 	}
 	
 	private static void createAdjacencyMatrix(File graphFile) throws FileNotFoundException {
@@ -120,6 +124,7 @@ public class AstarMain {
 			y++;
 			
 		}
+		in.close();
 	}
 	
 	private static void printGraph() {
@@ -138,6 +143,29 @@ public class AstarMain {
 			System.out.print(" => " + shortestPath.get(next));
 			next = shortestPath.get(next);
 		}
+	}
+	
+	private static void createMapFile(HashMap<Node, Node> shortestPath, File sourceFile) throws IOException {
+		Node next = goal;
+		while(!next.equals(start)) {		
+			graph[next.getY()][next.getX()] = 0;
+			next = shortestPath.get(next);
+		}
+		graph[next.getY()][next.getX()] = 0;
+		
+		String destination = OUTPUT_FOLDER + sourceFile.getName();
+		File targetFile = new File(destination);
+		if (targetFile.createNewFile()) {
+			System.out.println("Output file created");
+		}
+		RandomAccessFile output = new RandomAccessFile(destination, "rw");
+		for (int y = 0; y < graph.length; y++) {
+			for (int x = 0; x < graph.length; x++) {
+				output.writeChar(reverseSymbolMap.get(graph[y][x]));
+			}
+			output.writeChars("\n");
+		}
+		output.close();		
 	}
 
 }
