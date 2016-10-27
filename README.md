@@ -26,11 +26,11 @@ It is an eclipse project, import it from eclipse, the program expects a the grap
 ~\*~~   
 \*.\*X   
 
-It creates an output file under graphs\input\ with the same name as input file, which contains the shortest path denoted by the character "#" (space seperated for better view)
+It creates an output file under graphs\input\ with the same name as input file, which contains the shortest path denoted by the character "#"
 
 ####### Example output file:
 
-\# ^ . ^   
-\# \# . .   
-~ \# ~ ~   
-\* \# \# \#   
+\#^.^   
+\#\#..   
+~\#~~   
+\*\#\#\#   
