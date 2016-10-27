@@ -161,7 +161,7 @@ public class AstarMain {
 		RandomAccessFile output = new RandomAccessFile(destination, "rw");
 		for (int y = 0; y < graph.length; y++) {
 			for (int x = 0; x < graph.length; x++) {
-				output.writeChar(reverseSymbolMap.get(graph[y][x]));
+				output.writeByte(reverseSymbolMap.get(graph[y][x]));
 			}
 			output.writeChars("\n");
 		}
