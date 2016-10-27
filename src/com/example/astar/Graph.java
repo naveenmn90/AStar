@@ -34,11 +34,11 @@ public class Graph {
 		ArrayList<Node> neighborNodes = new ArrayList<>();
 		 
 		if ((current.getY() + 1 < graph.length) && 
-				graph[current.getX()][current.getY() + 1] < Integer.MAX_VALUE) {
+				graph[current.getY() + 1][current.getX()] < Integer.MAX_VALUE ) {
 			neighborNodes.add(new Node(current.getX(), current.getY() + 1));
 		}
 		if ((current.getY() - 1 >= 0) && 
-				graph[current.getX()][current.getY() - 1] < Integer.MAX_VALUE) {
+				graph[current.getY() - 1] [current.getX()] < Integer.MAX_VALUE) {
 			neighborNodes.add(new Node(current.getX(), current.getY() - 1));
 		}
 		if ((current.getX() + 1 < graph.length) && 
@@ -49,6 +49,7 @@ public class Graph {
 				graph[current.getY()][current.getX() - 1] < Integer.MAX_VALUE) {
 			neighborNodes.add(new Node(current.getX() - 1, current.getY()));
 		}
+		
 
 		return neighborNodes;
 	}

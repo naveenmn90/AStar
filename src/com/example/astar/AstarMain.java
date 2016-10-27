@@ -5,14 +5,13 @@ package com.example.astar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
 
 
 /**
  * @author naveenmn
+ * AStar driver class
  *
  */
 public class AstarMain {
@@ -26,6 +25,7 @@ public class AstarMain {
 	 * Symbol Table to hold the weight of each symbol in graph file
 	 */
 	private static HashMap<Character, Integer> symbolMap; 
+	private static HashMap<Integer, Character> reverseSymbolMap; 
 	
 	private static char sourceSymbol = '@';
 	
@@ -36,6 +36,13 @@ public class AstarMain {
 	private static Node goal;
 	
 	private static int numberOfVerices;
+	
+	private static final String SOURCE_FOLDER = "graphs" + 
+			File.pathSeparatorChar + "input" + File.pathSeparatorChar;
+	
+	private static final String DESTINATION_FOLDER = "graphs" + 
+			File.pathSeparatorChar + "output" + File.pathSeparatorChar;
+	
 	
 	/**
 	 * @param args filname, which contains the graph info
@@ -48,6 +55,13 @@ public class AstarMain {
 		symbolMap.put('X', 1);
 		symbolMap.put('*', 2);
 		symbolMap.put('^', 3);
+		
+		reverseSymbolMap = new HashMap<>();
+		reverseSymbolMap.put(Integer.MAX_VALUE, '~');
+		reverseSymbolMap.put(1, '.');
+		reverseSymbolMap.put(0, '#');
+		reverseSymbolMap.put(2, '*');
+		reverseSymbolMap.put(3, '^');
 		
 		File graphFile = null;
 		if( args.length > 0) {
@@ -66,6 +80,11 @@ public class AstarMain {
 		HashMap<Node, Node> shortestPath = astar.findShortestPath(start, goal);
 		System.out.println("Input Graph:\n");
 		printGraph();
+		
+		if (shortestPath.isEmpty()) {
+			System.out.println("No path found to goal" + goal);
+			System.exit(0);
+		}
 		System.out.println("Shortest Path\n");
 		printShortestPath(shortestPath);
 	}

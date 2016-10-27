@@ -23,9 +23,12 @@ public class Astar {
 	
 	/**
 	 * Find the shortest path 
-	 * @param start
-	 * @param goal
-	 * @return
+	 * @param start Start node
+	 * @param goal End node
+	 * @return HashMap<Node, Node>: if there is a path it contains the path information i
+	 * form of [Goal] => [NearesttoGoal] => [NearerToGoal] => ... => [Start] <br \>
+	 * 
+	 * If no path return empty map
 	 */
 	public HashMap<Node, Node> findShortestPath(Node start, Node goal) {
 		
@@ -33,7 +36,7 @@ public class Astar {
 			throw new NullPointerException("Start and Goal shouldnot be null");
 		}
 		
-		Node current;
+		Node current = null;
 		HashMap<Node, Node> traveledFrom = new HashMap<>();
 		HashMap<Node, Integer> pathCost = new HashMap<>();
 		
@@ -64,7 +67,18 @@ public class Astar {
 			
 		}
 		
-		return traveledFrom;
+		if (current == null || !current.equals(goal)) {
+			return new HashMap<>();
+		}
+		
+		HashMap<Node, Node> shortestPath = new HashMap<>();
+		Node next = goal;
+		while(!next.equals(start)) {		
+			shortestPath.put(next, traveledFrom.get(next));
+			next = traveledFrom.get(next);
+		}
+		
+		return shortestPath;
 	}
 	
 	private int heuristic(Node n1, Node n2) {
