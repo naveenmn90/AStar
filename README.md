@@ -13,7 +13,8 @@ Graph file uses the following representation.<br />
 X - Destination node.  
 . - Flatlands (Edge with weight 1).   
 \* - Forests (Edge with weight 2).   
-^ - Forests (Edge with weight 3). 
+^ - Forests (Edge with weight 3).   
+\~ - Water (No edge)   
 
 ## Running the code
 It is an eclipse project, import it from eclipse, the program expects a the graph file as command line argument.set the arguments in run configuration ex: graphs\input\test1.txt (not space seperated)  
